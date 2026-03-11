@@ -53,6 +53,7 @@ python tracker.py
 - `STRICT_FAILURES=true` makes the action fail if any product fetch fails.
 - Price drops are reported into one rolling GitHub issue labeled `price-alert`.
 - The issue is created on the first drop and receives a new comment for each later drop event.
+- GitHub Actions creates the `price-alert` label automatically if it does not already exist.
 - Some stores return `403 Forbidden` to obvious bots. The tracker now uses browser-like defaults and can set per-product headers when needed.
 - For Cloudflare-protected stores, the tracker prefers `cloudscraper` and falls back to plain `requests` if it is unavailable.
 - Keep selectors specific. Most tracker failures come from fragile selectors.
