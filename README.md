@@ -19,6 +19,7 @@ Each product entry supports:
 - `currency`: optional currency label
 - `attribute`: optional HTML attribute to read instead of text
 - `regex`: optional regex to isolate the number from the extracted text
+- `headers`: optional per-product HTTP headers for sites that block bot-like requests
 - `enabled`: disable entries without deleting them
 
 Example:
@@ -29,7 +30,10 @@ Example:
   "url": "https://shop.example.com/widget",
   "selector": "[data-test='price']",
   "currency": "USD",
-  "regex": "(\\d+[\\d,.]*(?:\\.\\d{2})?)"
+  "regex": "(\\d+[\\d,.]*(?:\\.\\d{2})?)",
+  "headers": {
+    "Referer": "https://shop.example.com/"
+  }
 }
 ```
 
@@ -49,6 +53,7 @@ python tracker.py
 - `STRICT_FAILURES=true` makes the action fail if any product fetch fails.
 - Price drops are reported into one rolling GitHub issue labeled `price-alert`.
 - The issue is created on the first drop and receives a new comment for each later drop event.
+- Some stores return `403 Forbidden` to obvious bots. The tracker now uses browser-like defaults and can set per-product headers when needed.
 - Keep selectors specific. Most tracker failures come from fragile selectors.
 
 ## Price-drop notifications

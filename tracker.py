@@ -26,6 +26,7 @@ class Product:
     currency: str = ""
     attribute: str | None = None
     regex: str | None = None
+    headers: dict[str, str] | None = None
     enabled: bool = True
 
 
@@ -64,6 +65,14 @@ def parse_products(raw_products: Any) -> list[Product]:
                     str(item["attribute"]).strip() if item.get("attribute") else None
                 ),
                 regex=str(item["regex"]).strip() if item.get("regex") else None,
+                headers=(
+                    {
+                        str(key): str(value)
+                        for key, value in item.get("headers", {}).items()
+                    }
+                    if item.get("headers")
+                    else None
+                ),
                 enabled=bool(item.get("enabled", True)),
             )
         except KeyError as exc:
@@ -84,9 +93,22 @@ def build_session() -> Any:
     session = requests.Session()
     session.headers.update(
         {
-            "User-Agent": os.getenv("PRICE_TRACKER_USER_AGENT", DEFAULT_USER_AGENT),
-            "Accept-Language": "en-US,en;q=0.8",
+            "User-Agent": os.getenv(
+                "PRICE_TRACKER_USER_AGENT",
+                (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/134.0.0.0 Safari/537.36"
+                ),
+            ),
+            "Accept": (
+                "text/html,application/xhtml+xml,application/xml;"
+                "q=0.9,image/avif,image/webp,*/*;q=0.8"
+            ),
+            "Accept-Language": "en-NZ,en-US;q=0.9,en;q=0.8",
             "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+            "Upgrade-Insecure-Requests": "1",
         }
     )
     return session
@@ -140,8 +162,13 @@ def parse_decimal(value: str | None) -> Decimal | None:
 
 
 def fetch_product(session: Any, product: Product) -> dict[str, Any]:
+    headers = dict(product.headers or {})
+    if "Referer" not in headers:
+        headers["Referer"] = "https://www.chemistwarehouse.co.nz/"
+
     response = session.get(
         product.url,
+        headers=headers,
         timeout=int(os.getenv("PRICE_TRACKER_TIMEOUT", DEFAULT_TIMEOUT_SECONDS)),
     )
     response.raise_for_status()
