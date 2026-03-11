@@ -1,0 +1,59 @@
+name: Price Tracker
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tracker
+        env:
+          STRICT_FAILURES: "false"
+        run: python tracker.py
+
+      - name: Create or update rolling price alert issue
+        if: hashFiles('price-drop.md') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="$(gh issue list --label price-alert --state open --json number --jq '.[0].number')"
+          if [ -z "$ISSUE_NUMBER" ] || [ "$ISSUE_NUMBER" = "null" ]; then
+            gh issue create \
+              --title "Rolling Price Alerts" \
+              --label "price-alert" \
+              --body-file price-drop.md
+          else
+            gh issue comment "$ISSUE_NUMBER" --body-file price-drop.md
+          fi
+
+      - name: Commit history changes
+        if: always()
+        run: |
+          if git diff --quiet -- history.json; then
+            echo "No history changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add history.json
+          git commit -m "Update tracked prices"
+          git push
