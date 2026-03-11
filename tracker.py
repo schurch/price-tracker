@@ -88,9 +88,21 @@ def parse_products(raw_products: Any) -> list[Product]:
 
 
 def build_session() -> Any:
-    import requests
+    try:
+        import cloudscraper
 
-    session = requests.Session()
+        session = cloudscraper.create_scraper(
+            browser={
+                "browser": "chrome",
+                "platform": "windows",
+                "mobile": False,
+            }
+        )
+    except ImportError:
+        import requests
+
+        session = requests.Session()
+
     session.headers.update(
         {
             "User-Agent": os.getenv(

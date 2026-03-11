@@ -54,6 +54,7 @@ python tracker.py
 - Price drops are reported into one rolling GitHub issue labeled `price-alert`.
 - The issue is created on the first drop and receives a new comment for each later drop event.
 - Some stores return `403 Forbidden` to obvious bots. The tracker now uses browser-like defaults and can set per-product headers when needed.
+- For Cloudflare-protected stores, the tracker prefers `cloudscraper` and falls back to plain `requests` if it is unavailable.
 - Keep selectors specific. Most tracker failures come from fragile selectors.
 
 ## Price-drop notifications
