@@ -1,3 +1,12 @@
 {
-  "products": {}
+  "products": {
+    "Huggies Ultra Dry Nappies Size 4 Girl 36 Pack": [
+      {
+        "status": "error",
+        "checked_at": "2026-03-11T08:44:31+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
+        "error": "403 Client Error: Forbidden for url: https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack"
+      }
+    ]
+  }
 }
