@@ -1,14 +1,58 @@
 [
   {
-    "name": "Huggies Ultra Dry Nappies Size 4 Girl 36 Pack",
-    "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
-    "selector": "body",
+    "name": "Thompson's Immunofort 120 Tablets",
+    "url": "https://www.chemistwarehouse.co.nz/buy/97046/thompson-s-immunofort-120-tablets",
+    "selector": ".product__price",
     "currency": "NZD",
-    "regex": "Huggies Ultra Dry Nappies Size 4 Girl 10 - 15kg Bulk 36 Pack.*?\\$([\\d]+(?:\\.[\\d]{2})?)\\s*NZD",
-    "headers": {
-      "Referer": "https://www.chemistwarehouse.co.nz/",
-      "Accept-Language": "en-NZ,en-US;q=0.9,en;q=0.8"
-    },
+    "enabled": true
+  },
+  {
+    "name": "Huggies Ultra Dry Nappies Size 4 Girl 10 - 15kg Bulk 36 Pack",
+    "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Huggies Ultra Dry Nappies Girl Size 4 Jumbo 72 Pack",
+    "url": "https://www.chemistwarehouse.co.nz/buy/34516/huggies-ultra-dry-nappies-girl-size-4-jumbo-72-pack",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Curash Baby Simply Water Wipes 6 x 80 Pack",
+    "url": "https://www.chemistwarehouse.co.nz/buy/87324/curash-baby-water-wipes-6-x-80-pack",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Oral B Floss Essential Original Twin Pack 2 x 50m",
+    "url": "https://www.chemistwarehouse.co.nz/buy/84551/oral-b-floss-essential-original-twin-pack-2-x-50m",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Inner Health Skin Shield 30 Capsules",
+    "url": "https://www.chemistwarehouse.co.nz/buy/110905/inner-health-skin-shield-30-capsules",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Baby U Dry Wipes 100 Pack",
+    "url": "https://www.chemistwarehouse.co.nz/buy/81543/baby-u-dry-wipes-100-pack",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
+    "name": "Mustela Stelatopia Emollient Face Cream 40ml Online Only",
+    "url": "https://www.chemistwarehouse.co.nz/buy/90092/mustela-stelatopia-emollient-face-cream-40ml-online-only",
+    "selector": ".product__price",
+    "currency": "NZD",
     "enabled": true
   }
 ]
