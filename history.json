@@ -24,6 +24,14 @@
         "currency": "NZD",
         "price": "44.99",
         "raw_text": "$44.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:24+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/97046/thompson-s-immunofort-120-tablets",
+        "currency": "NZD",
+        "price": "44.99",
+        "raw_text": "$44.99"
       }
     ],
     "Huggies Ultra Dry Nappies Size 4 Girl 10 - 15kg Bulk 36 Pack": [
@@ -58,6 +66,14 @@
         "currency": "NZD",
         "price": "15.99",
         "raw_text": "$15.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:25+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
+        "currency": "NZD",
+        "price": "15.99",
+        "raw_text": "$15.99"
       }
     ],
     "Huggies Ultra Dry Nappies Girl Size 4 Jumbo 72 Pack": [
@@ -80,6 +96,14 @@
       {
         "status": "ok",
         "checked_at": "2026-03-16T19:51:30+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/34516/huggies-ultra-dry-nappies-girl-size-4-jumbo-72-pack",
+        "currency": "NZD",
+        "price": "45.99",
+        "raw_text": "$45.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:25+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/34516/huggies-ultra-dry-nappies-girl-size-4-jumbo-72-pack",
         "currency": "NZD",
         "price": "45.99",
@@ -110,6 +134,14 @@
         "currency": "NZD",
         "price": "29.99",
         "raw_text": "$29.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/87324/curash-baby-water-wipes-6-x-80-pack",
+        "currency": "NZD",
+        "price": "29.99",
+        "raw_text": "$29.99"
       }
     ],
     "Oral B Floss Essential Original Twin Pack 2 x 50m": [
@@ -132,6 +164,14 @@
       {
         "status": "ok",
         "checked_at": "2026-03-16T19:51:32+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/84551/oral-b-floss-essential-original-twin-pack-2-x-50m",
+        "currency": "NZD",
+        "price": "6.49",
+        "raw_text": "$6.49"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/84551/oral-b-floss-essential-original-twin-pack-2-x-50m",
         "currency": "NZD",
         "price": "6.49",
@@ -162,6 +202,14 @@
         "currency": "NZD",
         "price": "32.99",
         "raw_text": "$32.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/110905/inner-health-skin-shield-30-capsules",
+        "currency": "NZD",
+        "price": "32.99",
+        "raw_text": "$32.99"
       }
     ],
     "Baby U Dry Wipes 100 Pack": [
@@ -184,6 +232,14 @@
       {
         "status": "ok",
         "checked_at": "2026-03-16T19:51:33+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/81543/baby-u-dry-wipes-100-pack",
+        "currency": "NZD",
+        "price": "6.99",
+        "raw_text": "$6.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/81543/baby-u-dry-wipes-100-pack",
         "currency": "NZD",
         "price": "6.99",
@@ -214,6 +270,34 @@
         "currency": "NZD",
         "price": "14.99",
         "raw_text": "$14.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/90092/mustela-stelatopia-emollient-face-cream-40ml-online-only",
+        "currency": "NZD",
+        "price": "14.99",
+        "raw_text": "$14.99"
+      }
+    ],
+    "ATOPALM Panthenol Lipcera 4g": [
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:26+00:00",
+        "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
+        "currency": "USD",
+        "price": "8.30",
+        "raw_text": "8.30"
+      }
+    ],
+    "ATOPALM Panthenol Stick Balm 10g": [
+      {
+        "status": "ok",
+        "checked_at": "2026-03-17T07:24:27+00:00",
+        "url": "https://www.yesstyle.com/en/atopalm-panthenol-stick-balm-10g/info.html/pid.1134237519",
+        "currency": "USD",
+        "price": "12.97",
+        "raw_text": "12.97"
       }
     ]
   }

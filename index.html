@@ -127,6 +127,73 @@
       color: var(--muted);
     }
 
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-width: 0;
+    }
+
+    .control label {
+      color: var(--muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .control select {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border-radius: 0.85rem;
+      border: 1px solid var(--border);
+      background: var(--panel-strong);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .group-stack {
+      display: grid;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .group-section {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 0.2rem;
+    }
+
+    .group-title {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .group-meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -269,6 +336,10 @@
         border-radius: 1.1rem;
       }
 
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
       .stats {
         grid-template-columns: 1fr;
       }
@@ -286,15 +357,47 @@
       <p>Current prices, lowest observed prices, and quick trend lines for every tracked item. This page loads its data directly from <code>history.json</code>.</p>
       <div class="hero-stats" id="hero-stats"></div>
       <div class="status" id="status">Loading history…</div>
+      <div class="controls" id="controls" hidden>
+        <div class="control">
+          <label for="group-by">Group by</label>
+          <select id="group-by">
+            <option value="none">No grouping</option>
+            <option value="currency">Currency</option>
+            <option value="store">Store</option>
+            <option value="price-state">Price state</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="sort-by">Sort by</label>
+          <select id="sort-by">
+            <option value="name">Name</option>
+            <option value="current-price-desc">Current price, high to low</option>
+            <option value="current-price-asc">Current price, low to high</option>
+            <option value="lowest-price-asc">Lowest price, low to high</option>
+            <option value="gap-desc">Distance from low</option>
+            <option value="recent">Most recently checked</option>
+            <option value="history-desc">Most data points</option>
+          </select>
+        </div>
+      </div>
     </section>
-    <section class="grid" id="product-grid"></section>
+    <section class="group-stack" id="product-groups"></section>
     <div class="empty" id="empty-state" hidden>No successful price history is available yet.</div>
   </main>
   <script>
     const heroStats = document.getElementById("hero-stats");
-    const productGrid = document.getElementById("product-grid");
+    const controls = document.getElementById("controls");
+    const productGroups = document.getElementById("product-groups");
     const emptyState = document.getElementById("empty-state");
     const status = document.getElementById("status");
+    const groupBySelect = document.getElementById("group-by");
+    const sortBySelect = document.getElementById("sort-by");
+
+    const uiState = {
+      payload: null,
+      groupBy: "none",
+      sortBy: "name"
+    };
 
     function parsePrice(value) {
       const parsed = Number.parseFloat(value);
@@ -326,6 +429,20 @@
         dateStyle: "medium",
         timeStyle: "short"
       }).format(date);
+    }
+
+    function parseTimestamp(value) {
+      const timestamp = Date.parse(value || "");
+      return Number.isFinite(timestamp) ? timestamp : 0;
+    }
+
+    function extractStoreLabel(url) {
+      try {
+        const { hostname } = new URL(url);
+        return hostname.replace(/^www\./, "") || "Unknown store";
+      } catch (error) {
+        return "Unknown store";
+      }
     }
 
     function buildSparkline(points) {
@@ -385,12 +502,16 @@
         return {
           name,
           url: current.url,
+          store: extractStoreLabel(current.url),
           currency: current.currency,
           currentPriceValue: current.priceValue,
           lowestPriceValue: Math.min(...values),
           highestPriceValue: Math.max(...values),
+          gapFromLowValue: current.priceValue - Math.min(...values),
+          isAtLowestPrice: Math.abs(current.priceValue - Math.min(...values)) < 0.001,
           entryCount: successful.length,
           lastCheckedAt: current.checkedAt,
+          lastCheckedAtValue: parseTimestamp(current.checkedAt),
           entries: successful
         };
       }).filter(Boolean);
@@ -408,6 +529,59 @@
       };
     }
 
+    function getGroupLabel(product, groupBy) {
+      switch (groupBy) {
+        case "currency":
+          return product.currency || "Unspecified currency";
+        case "store":
+          return product.store;
+        case "price-state":
+          return product.isAtLowestPrice ? "At lowest tracked price" : "Above lowest tracked price";
+        default:
+          return "All products";
+      }
+    }
+
+    function compareProducts(left, right, sortBy) {
+      switch (sortBy) {
+        case "current-price-desc":
+          return right.currentPriceValue - left.currentPriceValue || left.name.localeCompare(right.name);
+        case "current-price-asc":
+          return left.currentPriceValue - right.currentPriceValue || left.name.localeCompare(right.name);
+        case "lowest-price-asc":
+          return left.lowestPriceValue - right.lowestPriceValue || left.name.localeCompare(right.name);
+        case "gap-desc":
+          return right.gapFromLowValue - left.gapFromLowValue || left.name.localeCompare(right.name);
+        case "recent":
+          return right.lastCheckedAtValue - left.lastCheckedAtValue || left.name.localeCompare(right.name);
+        case "history-desc":
+          return right.entryCount - left.entryCount || left.name.localeCompare(right.name);
+        case "name":
+        default:
+          return left.name.localeCompare(right.name);
+      }
+    }
+
+    function buildGroups(products, groupBy) {
+      const grouped = new Map();
+      for (const product of products) {
+        const label = getGroupLabel(product, groupBy);
+        if (!grouped.has(label)) {
+          grouped.set(label, []);
+        }
+        grouped.get(label).push(product);
+      }
+      return [...grouped.entries()].map(([label, items]) => ({ label, items }));
+    }
+
+    function compareGroups(left, right, groupBy) {
+      if (groupBy === "price-state") {
+        const order = ["At lowest tracked price", "Above lowest tracked price"];
+        return order.indexOf(left.label) - order.indexOf(right.label);
+      }
+      return left.label.localeCompare(right.label);
+    }
+
     function renderHero(payload) {
       const cards = [
         ["Tracked items", String(payload.productCount)],
@@ -423,52 +597,88 @@
       `).join("");
     }
 
-    function renderProducts(payload) {
-      if (!payload.products.length) {
+    function renderProductCard(product) {
+      const current = formatMoney(product.currentPriceValue, product.currency);
+      const lowest = formatMoney(product.lowestPriceValue, product.currency);
+      const gap = product.gapFromLowValue;
+      const atLow = product.isAtLowestPrice;
+      const savingsLabel = atLow
+        ? "At lowest tracked price"
+        : `${formatMoney(gap, product.currency)} above low`;
+
+      return `
+        <article class="card">
+          <div class="card-top">
+            <h2><a href="${product.url}" target="_blank" rel="noreferrer">${product.name}</a></h2>
+            <span class="pill">${product.entryCount} ${product.entryCount === 1 ? "point" : "points"}</span>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">Current price</span>
+              <span class="stat-value">${current}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Lowest price</span>
+              <span class="stat-value">${lowest}</span>
+            </div>
+          </div>
+          <div class="trend">${savingsLabel}</div>
+          <div class="graph-wrap">
+            <div class="graph-head">
+              <span>${formatMoney(product.lowestPriceValue, product.currency)} low</span>
+              <span>${formatMoney(product.highestPriceValue, product.currency)} high</span>
+            </div>
+            ${buildSparkline(product.entries)}
+          </div>
+          <div class="meta">
+            Store: ${product.store}<br>
+            Last checked ${formatDate(product.lastCheckedAt)}.<br>
+            <a href="${product.url}" target="_blank" rel="noreferrer">Open product page</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderProducts() {
+      const payload = uiState.payload;
+      if (!payload || !payload.products.length) {
         emptyState.hidden = false;
+        productGroups.innerHTML = "";
         return;
       }
 
-      productGrid.innerHTML = payload.products.map((product) => {
-        const current = formatMoney(product.currentPriceValue, product.currency);
-        const lowest = formatMoney(product.lowestPriceValue, product.currency);
-        const gap = product.currentPriceValue - product.lowestPriceValue;
-        const atLow = Math.abs(gap) < 0.001;
-        const savingsLabel = atLow
-          ? "At lowest tracked price"
-          : `${formatMoney(gap, product.currency)} above low`;
+      emptyState.hidden = true;
 
-        return `
-          <article class="card">
-            <div class="card-top">
-              <h2><a href="${product.url}" target="_blank" rel="noreferrer">${product.name}</a></h2>
-              <span class="pill">${product.entryCount} ${product.entryCount === 1 ? "point" : "points"}</span>
+      const sortedProducts = [...payload.products].sort((left, right) => compareProducts(left, right, uiState.sortBy));
+      const groups = buildGroups(sortedProducts, uiState.groupBy).sort((left, right) => compareGroups(left, right, uiState.groupBy));
+
+      productGroups.innerHTML = groups.map((group) => `
+        <section class="group-section">
+          ${uiState.groupBy === "none" ? "" : `
+            <div class="group-header">
+              <h2 class="group-title">${group.label}</h2>
+              <div class="group-meta">${group.items.length} ${group.items.length === 1 ? "item" : "items"}</div>
             </div>
-            <div class="stats">
-              <div class="stat">
-                <span class="stat-label">Current price</span>
-                <span class="stat-value">${current}</span>
-              </div>
-              <div class="stat">
-                <span class="stat-label">Lowest price</span>
-                <span class="stat-value">${lowest}</span>
-              </div>
-            </div>
-            <div class="trend">${savingsLabel}</div>
-            <div class="graph-wrap">
-              <div class="graph-head">
-                <span>${formatMoney(product.lowestPriceValue, product.currency)} low</span>
-                <span>${formatMoney(product.highestPriceValue, product.currency)} high</span>
-              </div>
-              ${buildSparkline(product.entries)}
-            </div>
-            <div class="meta">
-              Last checked ${formatDate(product.lastCheckedAt)}.<br>
-              <a href="${product.url}" target="_blank" rel="noreferrer">Open product page</a>
-            </div>
-          </article>
-        `;
-      }).join("");
+          `}
+          <div class="grid">
+            ${group.items.map((product) => renderProductCard(product)).join("")}
+          </div>
+        </section>
+      `).join("");
+
+      status.textContent = `Loaded ${payload.productCount} tracked items. Grouped by ${groupBySelect.selectedOptions[0].text.toLowerCase()} and sorted by ${sortBySelect.selectedOptions[0].text.toLowerCase()}.`;
+    }
+
+    function bindControls() {
+      groupBySelect.addEventListener("change", () => {
+        uiState.groupBy = groupBySelect.value;
+        renderProducts();
+      });
+
+      sortBySelect.addEventListener("change", () => {
+        uiState.sortBy = sortBySelect.value;
+        renderProducts();
+      });
     }
 
     async function loadHistory() {
@@ -480,15 +690,17 @@
 
         const history = await response.json();
         const payload = buildPayload(history);
+        uiState.payload = payload;
         renderHero(payload);
-        renderProducts(payload);
-        status.textContent = `Loaded ${payload.productCount} tracked items from history.json.`;
+        controls.hidden = false;
+        renderProducts();
       } catch (error) {
         status.classList.add("error");
         status.textContent = `Could not load history.json: ${error.message}`;
       }
     }
 
+    bindControls();
     loadHistory();
   </script>
 </body>

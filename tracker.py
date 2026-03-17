@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 BASE_DIR = Path(__file__).resolve().parent
 PRODUCTS_PATH = BASE_DIR / "products.json"
@@ -22,10 +23,11 @@ MAX_HISTORY_PER_PRODUCT = 90
 class Product:
     name: str
     url: str
-    selector: str
+    selector: str | None = None
     currency: str = ""
     attribute: str | None = None
     regex: str | None = None
+    html_regex: str | None = None
     headers: dict[str, str] | None = None
     enabled: bool = True
 
@@ -59,12 +61,15 @@ def parse_products(raw_products: Any) -> list[Product]:
             product = Product(
                 name=str(item["name"]).strip(),
                 url=str(item["url"]).strip(),
-                selector=str(item["selector"]).strip(),
+                selector=str(item["selector"]).strip() if item.get("selector") else None,
                 currency=str(item.get("currency", "")).strip(),
                 attribute=(
                     str(item["attribute"]).strip() if item.get("attribute") else None
                 ),
                 regex=str(item["regex"]).strip() if item.get("regex") else None,
+                html_regex=(
+                    str(item["html_regex"]).strip() if item.get("html_regex") else None
+                ),
                 headers=(
                     {
                         str(key): str(value)
@@ -78,9 +83,13 @@ def parse_products(raw_products: Any) -> list[Product]:
         except KeyError as exc:
             raise ValueError(f"Product #{index} is missing required field {exc}") from exc
 
-        if not product.name or not product.url or not product.selector:
+        if (
+            not product.name
+            or not product.url
+            or (not product.selector and not product.html_regex)
+        ):
             raise ValueError(
-                f"Product #{index} must define non-empty name, url, and selector"
+                f"Product #{index} must define non-empty name, url, and either selector or html_regex"
             )
         parsed.append(product)
 
@@ -127,7 +136,16 @@ def build_session() -> Any:
 
 
 def extract_price_text(product: Product, html: str) -> str:
+    if product.html_regex:
+        match = re.search(product.html_regex, html)
+        if not match:
+            raise ValueError(f"HTML regex did not match page: {product.html_regex}")
+        return (match.group(1) if match.groups() else match.group(0)).strip()
+
     from bs4 import BeautifulSoup
+
+    if not product.selector:
+        raise ValueError("CSS selector is required when html_regex is not configured")
 
     soup = BeautifulSoup(html, "html.parser")
     node = soup.select_one(product.selector)
@@ -176,7 +194,8 @@ def parse_decimal(value: str | None) -> Decimal | None:
 def fetch_product(session: Any, product: Product) -> dict[str, Any]:
     headers = dict(product.headers or {})
     if "Referer" not in headers:
-        headers["Referer"] = "https://www.chemistwarehouse.co.nz/"
+        split_url = urlsplit(product.url)
+        headers["Referer"] = f"{split_url.scheme}://{split_url.netloc}/"
 
     response = session.get(
         product.url,

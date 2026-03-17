@@ -19,6 +19,7 @@ Each product entry supports:
 - `currency`: optional currency label
 - `attribute`: optional HTML attribute to read instead of text
 - `regex`: optional regex to isolate the number from the extracted text
+- `html_regex`: optional regex to extract the value directly from the raw HTML instead of a DOM node
 - `headers`: optional per-product HTTP headers for sites that block bot-like requests
 - `enabled`: disable entries without deleting them
 
@@ -34,6 +35,17 @@ Example:
   "headers": {
     "Referer": "https://shop.example.com/"
   }
+}
+```
+
+For sites that embed the price in JSON instead of a stable DOM element:
+
+```json
+{
+  "name": "Widget",
+  "url": "https://shop.example.com/widget",
+  "currency": "USD",
+  "html_regex": "\"price\":\"([0-9]+(?:\\.[0-9]+)?)\""
 }
 ```
 
