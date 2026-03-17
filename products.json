@@ -58,8 +58,8 @@
   {
     "name": "ATOPALM Panthenol Lipcera 4g",
     "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
-    "currency": "USD",
-    "html_regex": "\"price\":\"([0-9]+(?:\\.[0-9]+)?)\"",
+    "currency": "NZD",
+    "html_regex": "sellingPrice\\\">NZ\\$[^0-9]*([0-9]+(?:\\.[0-9]+)?)",
     "headers": {
       "Referer": "https://www.yesstyle.com/"
     },
@@ -68,8 +68,8 @@
   {
     "name": "ATOPALM Panthenol Stick Balm 10g",
     "url": "https://www.yesstyle.com/en/atopalm-panthenol-stick-balm-10g/info.html/pid.1134237519",
-    "currency": "USD",
-    "html_regex": "\"price\":\"([0-9]+(?:\\.[0-9]+)?)\"",
+    "currency": "NZD",
+    "html_regex": "sellingPrice\\\">NZ\\$[^0-9]*([0-9]+(?:\\.[0-9]+)?)",
     "headers": {
       "Referer": "https://www.yesstyle.com/"
     },
