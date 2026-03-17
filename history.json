@@ -347,14 +347,6 @@
     "ATOPALM Panthenol Lipcera 4g": [
       {
         "status": "ok",
-        "checked_at": "2026-03-17T07:24:26+00:00",
-        "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
-        "currency": "USD",
-        "price": "8.30",
-        "raw_text": "8.30"
-      },
-      {
-        "status": "ok",
         "checked_at": "2026-03-17T08:01:51+00:00",
         "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
         "currency": "NZD",
@@ -363,14 +355,6 @@
       }
     ],
     "ATOPALM Panthenol Stick Balm 10g": [
-      {
-        "status": "ok",
-        "checked_at": "2026-03-17T07:24:27+00:00",
-        "url": "https://www.yesstyle.com/en/atopalm-panthenol-stick-balm-10g/info.html/pid.1134237519",
-        "currency": "USD",
-        "price": "12.97",
-        "raw_text": "12.97"
-      },
       {
         "status": "ok",
         "checked_at": "2026-03-17T08:01:51+00:00",
