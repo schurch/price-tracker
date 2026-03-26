@@ -2,6 +2,12 @@ name: Price Tracker
 
 on:
   workflow_dispatch:
+    inputs:
+      send_test_whatsapp:
+        description: "Send a WhatsApp test message"
+        required: false
+        type: boolean
+        default: false
   schedule:
     - cron: "0 19 * * *"
     - cron: "0 20 * * *"
@@ -27,6 +33,11 @@ jobs:
         id: nz_time
         shell: bash
         run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run detected, bypassing NZ time check."
+            exit 0
+          fi
           hour="$(TZ=Pacific/Auckland date +%H)"
           if [ "$hour" != "08" ]; then
             echo "run=false" >> "$GITHUB_OUTPUT"
@@ -102,6 +113,18 @@ jobs:
                 body,
               });
             }
+
+      - name: Create WhatsApp test message
+        if: steps.nz_time.outputs.run == 'true' && github.event.inputs.send_test_whatsapp == 'true'
+        shell: bash
+        run: |
+          cat <<'EOF' > price-drop-whatsapp.txt
+          Price Tracker WhatsApp test
+
+          This is a manual test message from GitHub Actions.
+          Triggered at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Repository: ${{ github.repository }}
+          EOF
 
       - name: Send WhatsApp price alert
         if: steps.nz_time.outputs.run == 'true' && hashFiles('price-drop-whatsapp.txt') != ''

@@ -88,3 +88,5 @@ For WhatsApp alerts, `tracker.py` also writes `price-drop-whatsapp.txt`. If all 
 - `TWILIO_WHATSAPP_TO` (for example your verified destination number like `whatsapp:+6421...`)
 
 If any of those secrets are missing, the WhatsApp step is skipped and the GitHub issue flow still runs as usual.
+
+For a manual end-to-end test, run the workflow from GitHub Actions using the `Send a WhatsApp test message` input. Manual runs bypass the 8 AM New Zealand time check and create a temporary `price-drop-whatsapp.txt` test message so the Twilio step can send without requiring a real price drop.
