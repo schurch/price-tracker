@@ -103,6 +103,27 @@ jobs:
               });
             }
 
+      - name: Send WhatsApp price alert
+        if: steps.nz_time.outputs.run == 'true' && hashFiles('price-drop-whatsapp.txt') != ''
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
+          TWILIO_WHATSAPP_TO: ${{ secrets.TWILIO_WHATSAPP_TO }}
+        shell: bash
+        run: |
+          if [ -z "$TWILIO_ACCOUNT_SID" ] || [ -z "$TWILIO_AUTH_TOKEN" ] || [ -z "$TWILIO_WHATSAPP_FROM" ] || [ -z "$TWILIO_WHATSAPP_TO" ]; then
+            echo "Twilio WhatsApp secrets are not fully configured, skipping."
+            exit 0
+          fi
+          body="$(cat price-drop-whatsapp.txt)"
+          curl --fail --silent --show-error \
+            -u "$TWILIO_ACCOUNT_SID:$TWILIO_AUTH_TOKEN" \
+            --data-urlencode "From=$TWILIO_WHATSAPP_FROM" \
+            --data-urlencode "To=$TWILIO_WHATSAPP_TO" \
+            --data-urlencode "Body=$body" \
+            "https://api.twilio.com/2010-04-01/Accounts/$TWILIO_ACCOUNT_SID/Messages.json"
+
       - name: Commit history changes
         if: steps.nz_time.outputs.run == 'true' && always()
         run: |

@@ -64,6 +64,7 @@ python tracker.py
 - The workflow runs daily and can also be triggered manually.
 - `STRICT_FAILURES=true` makes the action fail if any product fetch fails.
 - Price drops are reported into one rolling GitHub issue labeled `price-alert`.
+- Price drops can also be sent to WhatsApp through Twilio when the relevant GitHub secrets are configured.
 - The issue is created on the first drop and receives a new comment for each later drop event.
 - GitHub Actions creates the `price-alert` label automatically if it does not already exist.
 - Some stores return `403 Forbidden` to obvious bots. The tracker now uses browser-like defaults and can set per-product headers when needed.
@@ -78,3 +79,12 @@ When a product price decreases, `tracker.py` writes `price-drop.md`. The GitHub 
 - otherwise adds the new drop report as a comment on the existing open issue
 
 This uses the built-in `GITHUB_TOKEN`, so there is no extra secret to manage.
+
+For WhatsApp alerts, `tracker.py` also writes `price-drop-whatsapp.txt`. If all of these GitHub Actions secrets are present, the workflow sends that message through Twilio's WhatsApp API:
+
+- `TWILIO_ACCOUNT_SID`
+- `TWILIO_AUTH_TOKEN`
+- `TWILIO_WHATSAPP_FROM` (for example `whatsapp:+14155238886`)
+- `TWILIO_WHATSAPP_TO` (for example your verified destination number like `whatsapp:+6421...`)
+
+If any of those secrets are missing, the WhatsApp step is skipped and the GitHub issue flow still runs as usual.

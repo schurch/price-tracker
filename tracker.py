@@ -14,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent
 PRODUCTS_PATH = BASE_DIR / "products.json"
 HISTORY_PATH = BASE_DIR / "history.json"
 ALERT_PATH = BASE_DIR / "price-drop.md"
+WHATSAPP_ALERT_PATH = BASE_DIR / "price-drop-whatsapp.txt"
 DEFAULT_TIMEOUT_SECONDS = 20
 DEFAULT_USER_AGENT = "price-tracker-bot/1.0 (+https://github.com/)"
 MAX_HISTORY_PER_PRODUCT = 90
@@ -264,6 +265,26 @@ def write_alert_file(drops: list[dict[str, Any]]) -> None:
     ALERT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_whatsapp_alert_file(drops: list[dict[str, Any]]) -> None:
+    if not drops:
+        WHATSAPP_ALERT_PATH.unlink(missing_ok=True)
+        return
+
+    lines = [f"Price drops detected ({utc_now()})", ""]
+    for drop in drops:
+        currency_suffix = f" {drop['currency']}" if drop["currency"] else ""
+        lines.extend(
+            [
+                f"{drop['name']}",
+                f"{drop['previous_price']} -> {drop['current_price']}{currency_suffix}",
+                drop["url"],
+                "",
+            ]
+        )
+
+    WHATSAPP_ALERT_PATH.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
 def run_tracker(dry_run: bool) -> int:
     products = parse_products(load_json(PRODUCTS_PATH, []))
     history = load_json(HISTORY_PATH, {"products": {}})
@@ -354,6 +375,7 @@ def run_tracker(dry_run: bool) -> int:
         )
 
     write_alert_file(drops)
+    write_whatsapp_alert_file(drops)
     save_json(HISTORY_PATH, history)
     write_summary(summary_lines)
 
