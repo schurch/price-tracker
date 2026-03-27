@@ -56,6 +56,13 @@
     "enabled": true
   },
   {
+    "name": "BioGaia Protectis Baby Probiotic Drops 5ml",
+    "url": "https://www.chemistwarehouse.co.nz/buy/142499/biogaia-protectis-baby-probiotic-drops-5ml",
+    "selector": ".product__price",
+    "currency": "NZD",
+    "enabled": true
+  },
+  {
     "name": "ATOPALM Panthenol Lipcera 4g",
     "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
     "currency": "NZD",
