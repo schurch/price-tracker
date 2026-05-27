@@ -712,17 +712,17 @@
         "currency": "NZD",
         "price": "24.99",
         "raw_text": "$24.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:58:56+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/97046/thompson-s-immunofort-120-tablets",
+        "currency": "NZD",
+        "price": "24.99",
+        "raw_text": "$24.99"
       }
     ],
     "Huggies Ultra Dry Nappies Size 4 Girl 10 - 15kg Bulk 36 Pack": [
-      {
-        "status": "ok",
-        "checked_at": "2026-03-11T08:52:43+00:00",
-        "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
-        "currency": "NZD",
-        "price": "15.99",
-        "raw_text": "$15.99 NZD"
-      },
       {
         "status": "ok",
         "checked_at": "2026-03-14T20:06:32+00:00",
@@ -1428,6 +1428,14 @@
       {
         "status": "ok",
         "checked_at": "2026-05-26T20:51:18+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
+        "currency": "NZD",
+        "price": "23.49",
+        "raw_text": "$23.49"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:58:57+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/90278/huggies-ultra-dry-nappies-size-4-girl-10-15kg-bulk-36-pack",
         "currency": "NZD",
         "price": "23.49",
@@ -2146,6 +2154,14 @@
         "currency": "NZD",
         "price": "32.99",
         "raw_text": "$32.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:58:57+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/34516/huggies-ultra-dry-nappies-girl-size-4-jumbo-72-pack",
+        "currency": "NZD",
+        "price": "32.99",
+        "raw_text": "$32.99"
       }
     ],
     "Curash Baby Simply Water Wipes 6 x 80 Pack": [
@@ -2856,6 +2872,14 @@
       {
         "status": "ok",
         "checked_at": "2026-05-26T20:51:19+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/87324/curash-baby-water-wipes-6-x-80-pack",
+        "currency": "NZD",
+        "price": "23.99",
+        "raw_text": "$23.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:58:58+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/87324/curash-baby-water-wipes-6-x-80-pack",
         "currency": "NZD",
         "price": "23.99",
@@ -3574,6 +3598,14 @@
         "currency": "NZD",
         "price": "7.49",
         "raw_text": "$7.49"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:00+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/84551/oral-b-floss-essential-original-twin-pack-2-x-50m",
+        "currency": "NZD",
+        "price": "7.49",
+        "raw_text": "$7.49"
       }
     ],
     "Inner Health Skin Shield 30 Capsules": [
@@ -4284,6 +4316,14 @@
       {
         "status": "ok",
         "checked_at": "2026-05-26T20:51:20+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/110905/inner-health-skin-shield-30-capsules",
+        "currency": "NZD",
+        "price": "22.99",
+        "raw_text": "$22.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:01+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/110905/inner-health-skin-shield-30-capsules",
         "currency": "NZD",
         "price": "22.99",
@@ -5002,6 +5042,14 @@
         "currency": "NZD",
         "price": "5.59",
         "raw_text": "$5.59"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:01+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/81543/baby-u-dry-wipes-100-pack",
+        "currency": "NZD",
+        "price": "5.59",
+        "raw_text": "$5.59"
       }
     ],
     "Mustela Stelatopia Emollient Face Cream 40ml Online Only": [
@@ -5716,6 +5764,14 @@
         "currency": "NZD",
         "price": "13.99",
         "raw_text": "$13.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:01+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/90092/mustela-stelatopia-emollient-face-cream-40ml-online-only",
+        "currency": "NZD",
+        "price": "13.99",
+        "raw_text": "$13.99"
       }
     ],
     "ATOPALM Panthenol Lipcera 4g": [
@@ -6398,6 +6454,14 @@
         "currency": "NZD",
         "price": "14.84",
         "raw_text": "14.84"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:02+00:00",
+        "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/info.html/pid.1134237520?googtrans=en",
+        "currency": "NZD",
+        "price": "14.84",
+        "raw_text": "14.84"
       }
     ],
     "ATOPALM Panthenol Stick Balm 10g": [
@@ -7076,6 +7140,14 @@
         "currency": "NZD",
         "price": "23.39",
         "raw_text": "23.39"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:03+00:00",
+        "url": "https://www.yesstyle.com/en/tcuc.NZD/coc.NZ/atopalm-panthenol-stick-balm-10g/info.html/pid.1134237519?googtrans=en",
+        "currency": "NZD",
+        "price": "23.39",
+        "raw_text": "23.39"
       }
     ],
     "BioGaia Protectis Baby Probiotic Drops 5ml": [
@@ -7658,6 +7730,14 @@
       {
         "status": "ok",
         "checked_at": "2026-05-26T20:51:22+00:00",
+        "url": "https://www.chemistwarehouse.co.nz/buy/142499/biogaia-protectis-baby-probiotic-drops-5ml",
+        "currency": "NZD",
+        "price": "29.99",
+        "raw_text": "$29.99"
+      },
+      {
+        "status": "ok",
+        "checked_at": "2026-05-27T20:59:02+00:00",
         "url": "https://www.chemistwarehouse.co.nz/buy/142499/biogaia-protectis-baby-probiotic-drops-5ml",
         "currency": "NZD",
         "price": "29.99",
